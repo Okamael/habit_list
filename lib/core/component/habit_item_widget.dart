@@ -1,27 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter/widgets.dart';
+import 'package:habit_list/core/model/habit_domain.dart';
 
-class HabitItemWidget extends StatelessWidget {
-  const HabitItemWidget({super.key});
+class HabitItemWidget extends StatefulWidget {
+  final HabitDomain habitItem;
+  const HabitItemWidget({super.key, required this.habitItem});
 
+  @override
+  State<HabitItemWidget> createState() => _HabitItemWidgetState();
+}
+
+class _HabitItemWidgetState extends State<HabitItemWidget> {
+  bool isCompleted = false;
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 70,
       decoration: BoxDecoration(
-        border:
+        border: Border.all(),
+        borderRadius: BorderRadius.circular(3),
       ),
       width: MediaQuery.of(context).size.width,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Read a Book'),
+          Text(widget.habitItem.title),
           Checkbox(
-            value: false,
-            onChanged: (value) {},
+            value: widget.habitItem.isCompleted,
+            onChanged: (value) {
+              print('on chance $value');
+              setState(() {
+                isCompleted = value as bool;
+              });
+            },
           )
         ],
       ),
